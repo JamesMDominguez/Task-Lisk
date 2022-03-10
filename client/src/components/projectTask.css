@@ -1,0 +1,53 @@
+#container {
+    display: flex;
+    justify-content: space-evenly; /* Can be changed in the live sample */
+  }
+  
+#container > div {
+    width: 25%;
+    background: #e4e4e4;
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  #container2 {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+  #container3 {
+    display: flex;
+    justify-content:space-between; /* Can be changed in the live sample */
+    margin-bottom:10px;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 5px;
+  }
+
+  #container3 > p {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
+  #overlay {
+    position: fixed;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    cursor: pointer;
+  }
+  
+  #text{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+  }
