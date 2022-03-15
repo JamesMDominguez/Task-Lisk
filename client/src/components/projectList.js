@@ -6,7 +6,7 @@ const Project = (props) => (
  <tr>
    <td onClick={()=>props.navigate(`/projectTask/${props.project._id}`)}>{props.project.name}</td>
    <td>
-     <Link className="btn btn-danger" style={{"margin-right":"10px"}} to={`/editProject/${props.project._id}`}>Edit</Link>
+     <Link className="btn btn-danger" style={{"marginRight":"10px"}} to={`/editProject/${props.project._id}`}>Edit</Link>
      <button className="btn btn-secondary" onClick={() => {props.deleteProject(props.project._id)}}>
        Delete
      </button>
@@ -66,7 +66,7 @@ export default function ProjectList() {
  // This following section will display the table with the projects of individuals.
  return (
    <div>
-       <div style={{"justify-content": "space-between", "display":"flex", "margin":"10px"}}>
+       <div style={{"justifyContent": "space-between", "display":"flex", "margin":"10px"}}>
        <h3>Project List</h3>
        <button className="btn btn-danger" onClick={()=>navigate("/createProject")}>Create Project</button>
        </div>

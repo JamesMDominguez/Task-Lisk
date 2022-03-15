@@ -8,10 +8,13 @@ export default function Edit() {
    priority: "",
    status:"",
    project:"",
+   _id:"",
  });
  const params = useParams();
  const navigate = useNavigate();
- 
+
+
+
  useEffect(() => {
    async function fetchData() {
      const id = params.id.toString();
@@ -22,22 +25,18 @@ export default function Edit() {
        window.alert(message);
        return;
      }
- 
      const record = await response.json();
      if (!record) {
        window.alert(`Record with id ${id} not found`);
        navigate("/");
        return;
      }
- 
      setForm(record);
    }
- 
    fetchData();
- 
    return;
  }, [params.id, navigate]);
- 
+
  // These methods will update the state properties.
  function updateForm(value) {
    return setForm((prev) => {
@@ -47,7 +46,7 @@ export default function Edit() {
  
  async function onSubmit(e) {
    e.preventDefault();
-   const editedPerson = {
+   const task = {
      summary: form.summary,
      description: form.description,
      priority: form.priority,
@@ -58,13 +57,13 @@ export default function Edit() {
    // This will send a post request to update the data in the database.
    await fetch(`http://localhost:5000/update/${params.id}`, {
      method: "POST",
-     body: JSON.stringify(editedPerson),
+     body: JSON.stringify(task),
      headers: {
        'Content-Type': 'application/json'
      },
    });
  
-   navigate("/");
+   navigate(`/projectTask/${form.project}`);
  }
  
  // This following section will display the form that takes input from the user to update the data.
@@ -106,9 +105,9 @@ export default function Edit() {
       <label htmlFor="name">status: </label>
        <select class="form-select" name="status" onChange={(e) => updateForm({ status: e.target.value})}>
           <option disabled selected value> {form.status} </option>
-          <option value="Lowest">Todo</option>
-          <option value="Low">In Progress</option>
-          <option value="Medium">Done</option>
+          <option value="Todo">Todo</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Done">Done</option>
        </select>
       </div>
        <br />
@@ -118,7 +117,7 @@ export default function Edit() {
            value="Save"
            className="btn btn-danger"
          />
-         <button className="btn btn-secondary" style={{"margin-left":"10px"}} onClick={()=>navigate(`/projectTask/${form._id}`)}>Cancel</button>
+         <button className="btn btn-secondary" style={{"marginLeft":"10px"}} onClick={()=>{navigate(`/projectTask/${form.project}`)}}>Cancel</button>
        </div>
      </form>
    </div>

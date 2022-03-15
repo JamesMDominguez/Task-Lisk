@@ -11,7 +11,7 @@ import { NavLink } from "react-router-dom";
 export default function Navbar() {
  return (
    <div>
-     <nav className="navbar navbar-expand-lg navbar-light bg-light" style={{"justify-content":"space-between","margin-left": "10px","margin-right": "10px"}}>
+     <nav className="navbar navbar-expand-lg navbar-light bg-light" style={{"justifyContent":"space-between","marginLeft": "10px","marginRight": "10px"}}>
        <NavLink className="navbar-brand" to="/">
        <img style={{"width" : 8 + '%'}} src="http://www.powerpac.org/wp-content/uploads/2017/07/checklist.png"></img>
        </NavLink>

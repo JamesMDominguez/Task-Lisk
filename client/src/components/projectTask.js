@@ -3,28 +3,6 @@ import { Link } from "react-router-dom";
 import { useParams, useNavigate } from "react-router";
 import './projectTask.css';
 
-const Record = (props) => (
- <tr>
-   <td>{props.record.status}</td>
-   <td>{props.record.summary}</td>
-   <td>{props.record.priority}</td>
-
-   <td>
-     <Link className="btn btn-danger" style={{"margin-right":"10px"}} to={`/edit/${props.record._id}`}>Edit</Link>
-     <button className="btn btn-secondary" onClick={() => {props.deleteRecord(props.record._id)}}>
-       Delete
-     </button>
-   </td>
- </tr>
-);
- 
-const Task = (props) => (
-    <div id="container3">
-          <p>{props.record.summary}</p>
-          <p>{props.record.priority}</p>
-    </div>
-   );
-
 export default function RecordList() {
  const [records, setRecords] = useState([]);
  const params = useParams();
@@ -32,8 +10,38 @@ export default function RecordList() {
  const [form, setForm] = useState({
     name: "",
   });
+ const [myTask, setMyTasks] = useState();
 
 
+
+  const Record = (props) => (
+    <tr>
+      <td>{props.record.status}</td>
+      <td>{props.record.summary}</td>
+      <td>{props.record.priority}</td>
+   
+      <td>
+        <Link className="btn btn-danger" style={{"marginRight":"10px"}} to={`/edit/${props.record._id}`}>Edit</Link>
+        <button className="btn btn-secondary" onClick={() => {props.deleteRecord(props.record._id)}}>
+          Delete
+        </button>
+      </td>
+    </tr>
+   );
+
+ const Task = (props) => (
+  <div 
+  id="container3" 
+  draggable="true" 
+  onDragStart={()=>{
+    setMyTasks(props.record)
+    console.log("task is comming")
+    }}>
+        <p>{props.record.summary}</p>
+        <p>{props.record.priority}</p>
+  </div>
+ );
+ 
  useEffect(() => {
     async function fetchData() {
       const id = params.id.toString();
@@ -51,12 +59,9 @@ export default function RecordList() {
         navigate("/");
         return;
       }
-  
       setForm(project);
     }
-  
     fetchData();
-  
     return;
   }, [params.id, navigate]);
  
@@ -90,10 +95,11 @@ export default function RecordList() {
    setRecords(newRecords);
  }
  
+ 
  // This method will map out the records on the table
  function recordList() {
    return records.map((record) => {
-       if(form.name == record.project){
+       if(form._id == record.project){
         return (
             <Record
               record={record}
@@ -105,9 +111,9 @@ export default function RecordList() {
    });
  }
 
- function todoList() {
+ function todoList(myStatus) {
     return records.map((record) => {
-        if(record.status == "Todo"){
+        if(record.status == myStatus && form._id == record.project){
          return (
              <Task
                record={record}
@@ -116,12 +122,12 @@ export default function RecordList() {
            );
         }
     });
-  }
- 
+  }  
+
  // This following section will display the table with the records of individuals.
  return (
-   <div>
-     <div style={{"justify-content": "space-between", "display":"flex", "margin":"10px"}}>
+   <>
+     <div style={{"justifyContent": "space-between", "display":"flex", "margin":"10px"}}>
        <h3>{form.name}</h3>
        <button className="btn btn-danger" onClick={()=>navigate(`/createTask/${form._id}`)}>Create Task</button>
        </div>
@@ -138,27 +144,38 @@ export default function RecordList() {
      </table>
 
      <div id="container">
-        <div>
+        <div
+           onDragOver={(e)=>{e.preventDefault()}}
+           onDragEnter={()=>{console.log("this is a drop zone Todo")}}
+           onDrop={()=>{console.log(myTask)}}
+        >
             <p>Todo</p>
             <div id="container2">
-                {todoList()}
+                {todoList("Todo")}
             </div>
         </div>
 
-        <div>
+        <div
+           onDragOver={(e)=>{e.preventDefault()}}
+           onDragEnter={()=>{console.log("this is a drop zone Progress")}}
+           onDrop={()=>{console.log(myTask)}}
+        >
            <p>In Progress</p>
            <div id="container2">
-             {todoList()}
+             {todoList("In Progress")}
             </div>
         </div>
-        <div> 
+        <div            
+            onDragOver={(e)=>{e.preventDefault()}}
+            onDragEnter={()=>{console.log("this is a drop zone Done")}}
+            onDrop={()=>{console.log(myTask)}}
+            > 
            <p>Done</p>
-           <div id="container2">
-           {todoList()}
+            <div id="container2">
+             {todoList("Done")}
             </div>
         </div>
      </div>
-
-   </div>
+   </>
  );
 }

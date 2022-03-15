@@ -57,7 +57,7 @@ export default function Create() {
            value="Create"
            className="btn btn-danger"
          />
-        <button className="btn btn-secondary" style={{"margin-left":"10px"}} onClick={()=>navigate(`/projectList`)}>Cancel</button>
+        <button className="btn btn-secondary" style={{"marginLeft":"10px"}} onClick={()=>navigate(`/projectList`)}>Cancel</button>
        </div>
      </form>
    </div>

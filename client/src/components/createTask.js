@@ -46,7 +46,7 @@ export default function Create() {
  // This function will handle the submission.
  async function onSubmit(e) {
    e.preventDefault();
-   form.project = records.name;
+   form.project = records._id;
    // When a post request is sent to the create url, we'll add a new record to the database.
    const newPerson = { ...form };
  
@@ -108,7 +108,7 @@ export default function Create() {
            value="Create"
            className="btn btn-danger"
          />
-        <button className="btn btn-secondary" style={{"margin-left":"10px"}} onClick={()=>navigate(`/projectTask/${records._id}`)}>Cancel</button>
+        <button className="btn btn-secondary" style={{"marginLeft":"10px"}} onClick={()=>navigate(`/projectTask/${records._id}`)}>Cancel</button>
        </div>
      </form>
    </div>
