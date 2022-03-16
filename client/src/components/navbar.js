@@ -16,8 +16,8 @@ export default function Navbar() {
        <img style={{"width" : 8 + '%'}} src="http://www.powerpac.org/wp-content/uploads/2017/07/checklist.png"></img>
        </NavLink>
 
-       <NavLink className="btn btn-danger" to="/projectList">
-       Projects
+       <NavLink className="btn btn-danger" to="/createProject">
+       Create
        </NavLink>
        
      </nav>

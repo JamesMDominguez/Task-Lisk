@@ -66,10 +66,7 @@ export default function ProjectList() {
  // This following section will display the table with the projects of individuals.
  return (
    <div>
-       <div style={{"justifyContent": "space-between", "display":"flex", "margin":"10px"}}>
-       <h3>Project List</h3>
-       <button className="btn btn-danger" onClick={()=>navigate("/createProject")}>Create Project</button>
-       </div>
+       <h3 style={{"margin":"10px"}}>Project List</h3>
      <table className="table table-striped" style={{ marginTop: 20 }}>
        <thead>
          <tr>
