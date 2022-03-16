@@ -10,32 +10,27 @@ export default function RecordList() {
  const [form, setForm] = useState({
     name: "",
   });
- const [myTask, setMyTasks] = useState();
-
-
-
-  const Record = (props) => (
-    <tr>
-      <td>{props.record.status}</td>
-      <td>{props.record.summary}</td>
-      <td>{props.record.priority}</td>
-   
-      <td>
-        <Link className="btn btn-danger" style={{"marginRight":"10px"}} to={`/edit/${props.record._id}`}>Edit</Link>
-        <button className="btn btn-secondary" onClick={() => {props.deleteRecord(props.record._id)}}>
-          Delete
-        </button>
-      </td>
-    </tr>
-   );
+  const [taskAdd, setTaskAdd] = useState({});
+  const [show, setShow] = useState("none");
+  let myTask = {
+    summary: "",
+    description: "",
+    priority: "",
+    status:"",
+    project:"",
+    _id:"",
+  };
 
  const Task = (props) => (
   <div 
+  onClick={()=>{
+    setTaskAdd(props.record)
+    setShow("block");
+  }}
   id="container3" 
   draggable="true" 
   onDragStart={()=>{
-    setMyTasks(props.record)
-    console.log("task is comming")
+    myTask = props.record
     }}>
         <p>{props.record.summary}</p>
         <p>{props.record.priority}</p>
@@ -97,23 +92,11 @@ export default function RecordList() {
  
  
  // This method will map out the records on the table
- function recordList() {
-   return records.map((record) => {
-       if(form._id == record.project){
-        return (
-            <Record
-              record={record}
-              deleteRecord={() => deleteRecord(record._id)}
-              key={record._id}
-            />
-          );
-       }
-   });
- }
+
 
  function todoList(myStatus) {
     return records.map((record) => {
-        if(record.status == myStatus && form._id == record.project){
+        if(record.status === myStatus && form._id === record.project){
          return (
              <Task
                record={record}
@@ -122,7 +105,19 @@ export default function RecordList() {
            );
         }
     });
-  }  
+  }
+
+async function handleDrop(){
+  setTaskAdd("true"+taskAdd);
+  await fetch(`http://localhost:5000/update/${myTask._id}`, {
+    method: "POST",
+    body: JSON.stringify(myTask),
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  });
+  console.log("Item updated");
+}
 
  // This following section will display the table with the records of individuals.
  return (
@@ -131,23 +126,13 @@ export default function RecordList() {
        <h3>{form.name}</h3>
        <button className="btn btn-danger" onClick={()=>navigate(`/createTask/${form._id}`)}>Create Task</button>
        </div>
-     <table className="table table-striped" style={{ marginTop: 20 }}>
-       <thead>
-         <tr>
-           <th>Status</th>
-           <th>Summary</th>
-           <th>Priority</th>
-           <th>Action</th>
-         </tr>
-       </thead>
-       <tbody>{recordList()}</tbody>
-     </table>
+
 
      <div id="container">
         <div
            onDragOver={(e)=>{e.preventDefault()}}
-           onDragEnter={()=>{console.log("this is a drop zone Todo")}}
-           onDrop={()=>{console.log(myTask)}}
+           onDragEnter={()=>{myTask.status="Todo"}}
+           onDrop={()=>{handleDrop()}}
         >
             <p>Todo</p>
             <div id="container2">
@@ -157,8 +142,8 @@ export default function RecordList() {
 
         <div
            onDragOver={(e)=>{e.preventDefault()}}
-           onDragEnter={()=>{console.log("this is a drop zone Progress")}}
-           onDrop={()=>{console.log(myTask)}}
+           onDragEnter={()=>{myTask.status="In Progress"}}
+           onDrop={()=>{handleDrop()}}
         >
            <p>In Progress</p>
            <div id="container2">
@@ -167,12 +152,27 @@ export default function RecordList() {
         </div>
         <div            
             onDragOver={(e)=>{e.preventDefault()}}
-            onDragEnter={()=>{console.log("this is a drop zone Done")}}
-            onDrop={()=>{console.log(myTask)}}
+            onDragEnter={()=>{myTask.status="Done"}}
+            onDrop={()=>{handleDrop()}}
             > 
            <p>Done</p>
             <div id="container2">
              {todoList("Done")}
+            </div>
+        </div>
+     </div>
+
+     <div id="overlay" style={{"display":show}} onClick={()=>{setShow("none")}}>
+         <div id="text"> 
+            <p>Summary: {taskAdd.summary}</p>
+            <p>Description: {taskAdd.description}</p>
+            <p>Priority: {taskAdd.priority}</p>
+            <p>Status: {taskAdd.status}</p>
+            <div style={{"justifyContent":"space-between", "display":"flex"}}>
+            <Link className="btn btn-danger" style={{"marginRight":"10px"}} to={`/edit/${taskAdd._id}`} >Edit</Link>
+             <button className="btn btn-secondary" onClick={() => {deleteRecord(taskAdd._id)}}>
+               Delete
+             </button>
             </div>
         </div>
      </div>
