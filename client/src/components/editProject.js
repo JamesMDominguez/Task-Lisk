@@ -46,7 +46,6 @@ export default function Edit() {
    const editedPerson = {
      name: form.name,
    };
- 
    // This will send a post request to update the data in the database.
    await fetch(`http://localhost:5000/updateProject/${params.id}`, {
      method: "POST",
@@ -55,8 +54,7 @@ export default function Edit() {
        'Content-Type': 'application/json'
      },
    });
- 
-   navigate("/projectList");
+   navigate("/");
  }
  
  // This following section will display the form that takes input from the user to update the data.
@@ -81,7 +79,7 @@ export default function Edit() {
            value="Save"
            className="btn btn-danger"
          />
-         <button className="btn btn-secondary" style={{"marginLeft":"10px"}} onClick={()=>navigate("/projectList")}>Cancel</button>
+         <button className="btn btn-secondary" style={{"marginLeft":"10px"}} onClick={()=>navigate("/")}>Cancel</button>
        </div>
      </form>
    </div>

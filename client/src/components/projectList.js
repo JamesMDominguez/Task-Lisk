@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
+import './projectTask.css';
 
-const Project = (props) => (
- <tr>
-   <td onClick={()=>props.navigate(`/projectTask/${props.project._id}`)}>{props.project.name}</td>
-   <td>
-     <Link className="btn btn-danger" style={{"marginRight":"10px"}} to={`/editProject/${props.project._id}`}>Edit</Link>
-     <button className="btn btn-secondary" onClick={() => {props.deleteProject(props.project._id)}}>
-       Delete
-     </button>
-   </td>
- </tr>
-);
+
  
 export default function ProjectList() {
+
+  const Project = (props) => (
+    <div>
+     <h3 onClick={()=>props.navigate(`/projectTask/${props.project._id}`)}>{props.project.name}</h3>
+     <div style={{"justifyContent":"space-between","display":"flex"}}>
+     <button className="btn btn-danger" style={{"marginRight":"10px"}} onClick={()=>navigate(`/editProject/${props.project._id}`)}>Edit</button>
+     <button className="btn btn-secondary" onClick={() => {props.deleteProject(props.project._id)}}> 
+       Delete
+     </button>
+     </div>
+    </div>
+);
+
  const [projects, setProjects] = useState([]);
  const navigate = useNavigate();
 
@@ -65,16 +68,9 @@ export default function ProjectList() {
  
  // This following section will display the table with the projects of individuals.
  return (
-   <div>
-       <h3 style={{"margin":"10px"}}>Project List</h3>
-     <table className="table table-striped" style={{ marginTop: 20 }}>
-       <thead>
-         <tr>
-           <th>name</th>
-         </tr>
-       </thead>
-       <tbody>{projectList()}</tbody>
-     </table>
-   </div>
+   <>
+  <h3 style={{"marginLeft":"6.5%"}}>Project List</h3>
+       <div id="container">{projectList()}</div>
+   </>
  );
 }
