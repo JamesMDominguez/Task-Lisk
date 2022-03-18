@@ -7,9 +7,7 @@ export default function RecordList() {
  const params = useParams();
  const navigate = useNavigate();
  const [update, setUpdate] = useState(false);
- const [myProject, SetMyProject] = useState({
-    name: "",
-  });
+ const [myProject, SetMyProject] = useState({name: "",});
  const [show, setShow] = useState("none");
  const [status] = useState(["Todo","In Progress","done"]);
  const [myTask, setMyTask] = useState({
@@ -78,7 +76,6 @@ export default function RecordList() {
  // This method will map out the records on the table
 
 async function updateRecord(updatedTask){
-  setUpdate((prev)=>!prev)
   await fetch(`http://localhost:5000/update/${updatedTask._id}`, {
     method: "POST",
     body: JSON.stringify(updatedTask),
@@ -86,8 +83,8 @@ async function updateRecord(updatedTask){
       'Content-Type': 'application/json'
     },
   });
-  
   console.log("Item updated");
+  setUpdate((prev)=>!prev)
   setShow("none");
 }
 
@@ -97,8 +94,7 @@ function updateForm(value) {
   });
 }
 
-
-function todoListBuckets() {
+function todoListBuckets(){
     let showCreateTask= "none"; 
     let selectedTask = {}
     return status.map((myStatus) => {
