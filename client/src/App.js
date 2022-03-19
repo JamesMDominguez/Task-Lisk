@@ -6,7 +6,6 @@ import { Route, Routes } from "react-router-dom";
 // We import all the components we need in our app
 import Navbar from "./components/navbar";
 import EditProject from "./components/editProject";
-import CreateTask from "./components/createTask";
 import CreateProject from "./components/createProject";
 import ProjectList from "./components/projectList";
 import ProjectTask from "./components/projectTask";
@@ -17,7 +16,6 @@ const App = () => {
      <Navbar />
      <Routes>
        <Route exact path="/" element={<ProjectList />} />
-       <Route path="/createTask/:id" element={<CreateTask />} />
        <Route path="/createProject" element={<CreateProject />} />
        <Route path="/editProject/:id" element={<EditProject />} />
        <Route path="/projectTask/:id" element={<ProjectTask />} />

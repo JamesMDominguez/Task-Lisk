@@ -40,9 +40,10 @@ export default function Create() {
  // This following section will display the form that takes the input from the user.
  return (
    <div>
-     <h3>Create New Project</h3>
-     <form onSubmit={onSubmit}>
+     <h3 style={{"marginLeft":"5%"}}>Create New Project</h3>
+     <form onSubmit={onSubmit} className="container">
        <div className="form-group">
+       <label>Name</label>
          <input
            type="text"
            className="form-control"
@@ -51,7 +52,7 @@ export default function Create() {
            onChange={(e) => updateForm({ name: e.target.value })}
          />
        </div>
-       <div className="form-group">
+       <div className="form-group" style={{"marginTop":"10px"}}>
          <input
            type="submit"
            value="Create"

@@ -7,10 +7,19 @@ export default function RecordList() {
  const params = useParams();
  const navigate = useNavigate();
  const [update, setUpdate] = useState(false);
- const [myProject, SetMyProject] = useState({name: "",});
+ const [myProject, SetMyProject] = useState({name: "",_id:"",});
  const [show, setShow] = useState("none");
+ const [showCreate, setShowCreate] = useState("none");
  const [status] = useState(["Todo","In Progress","done"]);
  const [myTask, setMyTask] = useState({
+  description: "",
+  priority: "",
+  project:"",
+  summary: "",
+  status:"",
+  _id:"",
+});
+const [myNewTask, setMyNewTask] = useState({
   description: "",
   priority: "",
   project:"",
@@ -94,6 +103,12 @@ function updateForm(value) {
   });
 }
 
+function updateNewForm(value) {
+  return setMyNewTask((prev) => {
+    return { ...prev, ...value };
+  });
+}
+
 function todoListBuckets(){
     let showCreateTask= "none"; 
     let selectedTask = {}
@@ -141,13 +156,35 @@ function todoListBuckets(){
        <button 
        className="btn btn-danger" 
        style={{"width":"100%","borderRadius":"10px","display":showCreateTask}} 
-       onClick={()=>navigate(`/createTask/${myProject._id}`)}>
+       onClick={()=>{setShowCreate("block")}}>
          Create Task
        </button>
    </div>
      )});
   }
 
+async function createTask(e){
+    e.preventDefault();
+    myNewTask.project = myProject._id;
+    // When a post request is sent to the create url, we'll add a new record to the database.
+    const newTask = { ...myNewTask };
+  
+    await fetch("http://localhost:5000/record/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newTask),
+    })
+    .catch(error => {
+      window.alert(error);
+      return;
+    });
+    setShowCreate("none");
+    setMyNewTask({});
+    setUpdate((prev)=>!prev);
+
+  }
 
  // This following section will display the table with the records of individuals.
  return (
@@ -207,6 +244,51 @@ function todoListBuckets(){
             deleteRecord(myTask._id)
             }}>Delete</button>
          </div>
+        </div>
+     </div>
+
+     <div id="overlay" style={{"display":showCreate}} onClick={()=>{setShowCreate("none")}}>
+         <div id="text" onClick={(e)=>{e.stopPropagation()}}> 
+       <div className="form-group">
+         <label htmlFor="name">summary: </label>
+         <input
+           type="text"
+           className="form-control"
+           id="name"
+           value={myNewTask.summary}
+           onChange={(e)=>updateNewForm({summary:e.target.value})}
+         />
+       </div>
+       <div className="form-group">
+         <label htmlFor="position">description: </label>
+         <textarea
+           className="form-control"
+           id="position"
+           value={myNewTask.description}
+           onChange={(e) => {updateNewForm({description:e.target.value})}}
+         />
+       </div>
+       <div className="form-group">
+       <label htmlFor="name">priority: </label>
+       <select className="form-select" name="priority" onChange={(e)=>updateNewForm({priority:e.target.value})}>
+          <option value="Lowest">Lowest</option>
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+          <option value="Highest">Highest</option>
+       </select>
+      </div>
+      <div className="form-group">
+      <label htmlFor="name">status: </label>
+       <select className="form-select" name="status" onChange={(e) =>{updateNewForm({status:e.target.value})
+          }}>
+          <option value="Todo">Todo</option>
+          <option value="In Progress">In Progress</option>
+          <option value="done">Done</option>
+       </select>
+      </div>
+       <br />
+       <button className="btn btn-danger" style={{"width":"100%"}} onClick={(e)=>createTask(e)}>Create</button>
         </div>
      </div>
    </>
