@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
- 
+import { useAuth0 } from "@auth0/auth0-react";
+
 export default function Create() {
+ const { user, isAuthenticated } = useAuth0();
  const [form, setForm] = useState({
    name: "",
+   user:isAuthenticated?user.email:"",
  });
  const navigate = useNavigate();
- 
+
  // These methods will update the state properties.
  function updateForm(value) {
    return setForm((prev) => {
@@ -34,7 +37,7 @@ export default function Create() {
    });
  
    setForm({ name: "" });
-   navigate("/projectList");
+   navigate("/");
  }
  
  // This following section will display the form that takes the input from the user.
@@ -49,7 +52,7 @@ export default function Create() {
            className="form-control"
            id="name"
            value={form.name}
-           onChange={(e) => updateForm({ name: e.target.value })}
+           onChange={(e) => updateForm({ name: e.target.value, user:isAuthenticated?user.email:""})}
          />
        </div>
        <div className="form-group" style={{"marginTop":"10px"}}>

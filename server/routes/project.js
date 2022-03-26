@@ -41,6 +41,7 @@ projectRoutes.route("/project/add").post(function (req, response) {
   let db_connect = dbo.getDb();
   let myobj = {
     name: req.body.name,
+    user: req.body.user,
   };
   db_connect.collection("projects").insertOne(myobj, function (err, res) {
     if (err) throw err;
@@ -55,6 +56,7 @@ projectRoutes.route("/updateProject/:id").post(function (req, response) {
   let newvalues = {
     $set: {
       name: req.body.name,
+      user: req.body.user,
     },
   };
   db_connect

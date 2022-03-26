@@ -5,7 +5,6 @@
   
 #container > div {
     width: 25%;
-    background: #e4e4e4;
     border-radius: 10px;
     padding: 10px;
   }
@@ -52,4 +51,94 @@
     background-color: #e4e4e4;
     padding: 10px;
     border-radius: 10px;
+  }
+
+  #containerPro {
+    display: flex;
+    justify-content: space-evenly; /* Can be changed in the live sample */
+    flex-wrap: wrap;
+  }
+  
+#containerPro > div {
+    min-width: 31%;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+  }
+
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    display:flex;
+    justify-content: end;
+  }
+
+  .switch {
+    position: relative;
+    width: 60px;
+    height: 34px;
+    margin:10px
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #d33b3b;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #d33b3b;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  #overlay2 {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(99, 99, 99);
   }
