@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import {MyContext} from "../App.js";
 import './projectTask.css';
 import { useAuth0 } from "@auth0/auth0-react";
+import {ButtonContex} from "../App.js";
 
 
  
@@ -12,7 +13,9 @@ export default function ProjectList() {
  const [projects, setProjects] = useState([]);
  const navigate = useNavigate();
  const isDarkMode = useContext(MyContext);
+ const {currentPage,setCurrentPage} = useContext(ButtonContex);
  // This method fetches the projects from the database.
+
  useEffect(() => {
    async function getProjects() {
      const response = await fetch(`http://localhost:5000/project/`);
@@ -44,7 +47,10 @@ export default function ProjectList() {
 
  const Project = (props) => (
   <div style={{"backgroundColor":isDarkMode?"#3a3a3a":"#e4e4e4","color":isDarkMode?"white":"#1f1f1f"}}>
-   <h3 onClick={()=>props.navigate(`/projectTask/${props.project._id}`)}>{props.project.name}</h3>
+   <h3 onClick={()=>{
+    setCurrentPage("createTask")
+    props.navigate(`/projectTask/${props.project._id}`)
+   }}>{props.project.name}</h3>
    <div style={{"justifyContent":"space-between","display":"flex"}}>
    <button className="btn btn-danger" style={{"marginRight":"10px"}} onClick={()=>navigate(`/editProject/${props.project._id}`)}>Edit</button>
    <button className="btn btn-secondary" onClick={() => {props.deleteProject(props.project._id)}}> 

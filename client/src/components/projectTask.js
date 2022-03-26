@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router";
 import {MyContext} from "../App.js";
+import {ButtonContex} from "../App.js";
 import './projectTask.css';
 
 export default function RecordList() {
@@ -11,6 +12,7 @@ export default function RecordList() {
  const [myProject, SetMyProject] = useState({name: "",_id:"",});
  const [show, setShow] = useState("none");
  const [showCreate, setShowCreate] = useState("none");
+ const {currentPage,setCurrentPage} = useContext(ButtonContex);
  const [status] = useState(["Todo","In Progress","Done"]);
  const isDarkMode = useContext(MyContext);
  const [myTask, setMyTask] = useState({
@@ -21,17 +23,16 @@ export default function RecordList() {
   status:"",
   _id:"",
 });
-const [myNewTask, setMyNewTask] = useState({
-  description: "",
-  priority: "",
-  project:"",
-  summary: "",
-  status:"Todo",
-  _id:"",
-});
+//let myPageUrl=window.location.pathname.split('/')[1];
 
- 
- useEffect(() => {
+useEffect(()=>{
+  if(currentPage==="tasklist"){
+    setShow("block")
+    return
+  }
+},[currentPage]);
+
+useEffect(() => {
     async function fetchData() {
       const id = params.id.toString();
       const response = await fetch(`http://localhost:5000/project/${params.id.toString()}`);
@@ -71,7 +72,7 @@ const [myNewTask, setMyNewTask] = useState({
    getRecords();
  
    return;
- }, [update]);
+ }, [update,currentPage]);
  
  // This method will delete a record
  async function deleteRecord(id) {
@@ -104,12 +105,6 @@ function updateForm(value) {
   });
 }
 
-function updateNewForm(value) {
-  return setMyNewTask((prev) => {
-    return { ...prev, ...value };
-  });
-}
-
 function todoListBuckets(){
     let showCreateTask= "none"; 
     let selectedTask = {}
@@ -133,7 +128,7 @@ function todoListBuckets(){
       }}
    >
        <p>{myStatus}</p>
-       <div id="container2">  {/*Todo List*/}
+       <div id="container2">  
      {records.map((record) => {
       if(record.status === myStatus && myProject._id === record.project){
        return (
@@ -143,6 +138,7 @@ function todoListBuckets(){
         onClick={()=>{
           setMyTask(record)
           setShow("block")
+          setShowCreate("none")
         }}
         id="container3" 
         draggable = "true"
@@ -150,12 +146,23 @@ function todoListBuckets(){
               <p>{record.summary}</p>
               <p>{record.priority}</p>
         </div>
-         )}})}  {/*Todo List*/}
+         )}})} 
        </div>  
        <button 
        className="btn btn-danger" 
        style={{"width":"100%","borderRadius":"10px","display":showCreateTask}} 
-       onClick={()=>{setShowCreate("block")}}>
+       onClick={()=>{
+         setShow("block")
+         setShowCreate("block")
+         setMyTask({
+          description: "",
+          priority: "",
+          project:"",
+          summary: "",
+          status:"",
+          _id:"",
+        })
+         }}>
          Create
        </button>
    </div>
@@ -164,7 +171,10 @@ function todoListBuckets(){
 
 function editForm(){
   return(
-    <div id="overlay" style={{"display":show}} onClick={()=>{setShow("none")}}>
+    <div id="overlay" style={{"display":show}} onClick={()=>{
+      setCurrentPage("")
+      setShow("none")
+      }}>
     <div id="text" style={{"backgroundColor":isDarkMode?"#838383":"white","color":isDarkMode?"white":"#1f1f1f"}} onClick={(e)=>{e.stopPropagation()}}> 
   <div className="form-group">
     <label htmlFor="name">summary: </label>
@@ -187,8 +197,8 @@ function editForm(){
   </div>
   <div className="form-group">
   <label htmlFor="name">priority: </label>
-  <select className="form-select" defaultValue={'DEFAULT'} name="priority" onChange={(e)=>updateForm({priority:e.target.value})}>
-     <option value="DEFAULT" disabled> {myTask.priority} </option>
+  <select className="form-select" name="priority" onChange={(e)=>updateForm({priority:e.target.value})}>
+     <option selected> {myTask.priority} </option>
      <option value="Lowest">Lowest</option>
      <option value="Low">Low</option>
      <option value="Medium">Medium</option>
@@ -199,80 +209,29 @@ function editForm(){
  <div className="form-group">
  <label htmlFor="name">status: </label>
   <select className="form-select" name="status" onChange={(e) =>{updateForm({status:e.target.value})}}>
-     <option disabled> {myTask.status} </option>
+     <option selected>{myTask.status}</option>
      <option value="Todo">Todo</option>
      <option value="In Progress">In Progress</option>
      <option value="Done">Done</option>
   </select>
  </div>
   <br />
-  <div className="form-group" style={{"justifyContent":"space-evenly","display":"flex"}}>
+  <div className="form-group" style={{"justifyContent":"space-evenly","display":showCreate==="block"?"none":"flex"}}>
   <button className="btn btn-danger" onClick={()=>updateRecord(myTask)}>Save</button>
      <button className="btn btn-secondary" onClick={() => {
        deleteRecord(myTask._id)
        }}>Delete</button>
     </div>
+    <button className="btn btn-danger" style={{"width":"100%","display":showCreate}} onClick={(e)=>createTask(e)}>Create</button>
    </div>
 </div>
   )
 }
 
-function createTaskForm(){
-return(
-  <div id="overlay" style={{"display":showCreate}} onClick={()=>{setShowCreate("none")}}>
-  <div id="text" style={{"backgroundColor":isDarkMode?"#838383":"white","color":isDarkMode?"white":"#1f1f1f"}} onClick={(e)=>{e.stopPropagation()}}> 
-<div className="form-group">
-  <label htmlFor="name">summary: </label>
-  <input
-    type="text"
-    className="form-control"
-    id="name"
-    value={myNewTask.summary}
-    onChange={(e)=>updateNewForm({summary:e.target.value})}
-  />
-</div>
-<div className="form-group">
-  <label htmlFor="position">description: </label>
-  <textarea
-    className="form-control"
-    id="position"
-    value={myNewTask.description}
-    onChange={(e) => {updateNewForm({description:e.target.value})}}
-  />
-</div>
-<div className="form-group">
-<label htmlFor="name">priority: </label>
-<select className="form-select" defaultValue={'DEFAULT'} name="priority" onChange={(e)=>updateNewForm({priority:e.target.value})} required>
-   <option value="DEFAULT" disabled>Choose a priority...</option>
-   <option value="Lowest">Lowest</option>
-   <option value="Low">Low</option>
-   <option value="Medium">Medium</option>
-   <option value="High">High</option>
-   <option value="Highest">Highest</option>
-</select>
-</div>
-<div className="form-group">
-<label htmlFor="name">status: </label>
-<select className="form-select" name="status" onChange={(e) =>{updateNewForm({status:e.target.value})
-   }}>
-   <option value="DEFAULT" disabled>Choose a status...</option>
-   <option value="Todo">Todo</option>
-   <option value="In Progress">In Progress</option>
-   <option value="Done">Done</option>
-</select>
-</div>
-<br />
-<button className="btn btn-danger" style={{"width":"100%"}} onClick={(e)=>createTask(e)}>Create</button>
- </div>
-</div>
-)
-}
-
 async function createTask(e){
     e.preventDefault();
-    myNewTask.project = myProject._id;
-    // When a post request is sent to the create url, we'll add a new record to the database.
-    const newTask = { ...myNewTask };
+    myTask.project = myProject._id;
+    const newTask = { ...myTask };
   
     await fetch("http://localhost:5000/record/add", {
       method: "POST",
@@ -285,20 +244,11 @@ async function createTask(e){
       window.alert(error);
       return;
     });
-    setShowCreate("none");
-    setMyNewTask({
-      description: "",
-      priority: "",
-      project:"",
-      summary: "",
-      status:"",
-      _id:"",
-    });
+    setShow("none");
     setUpdate((prev)=>!prev);
 
   }
 
- // This following section will display the table with the records of individuals.
  return (
    <>
     <h3 style={{"marginLeft":"6.5%","color":isDarkMode?"white":"#1f1f1f"}}>{myProject.name}</h3>
@@ -306,7 +256,6 @@ async function createTask(e){
        {todoListBuckets()}
      </div>
       {editForm()}
-      {createTaskForm()}
    </>
  );
 }
