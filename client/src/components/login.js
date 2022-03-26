@@ -14,7 +14,7 @@ const LoginButton = () => {
   }
 
   return( 
-  <div style={{"display":"flex","justifyContent":"flex-end"}}>
+  <div>
   <img src={user.picture} alt={user.name} style={{"borderRadius":"50px","width":"40px","height":"40px","margin":"5px"}}/>
   <button className="btn btn-danger" style={{"margin":"5px"}} onClick={() =>{ logout({ returnTo: window.location.origin })}}> Log Out</button>
   </div>

@@ -83,7 +83,6 @@ const [myNewTask, setMyNewTask] = useState({
    setRecords(newRecords);
  }
  
- 
  // This method will map out the records on the table
 
 async function updateRecord(updatedTask){
@@ -166,7 +165,7 @@ function todoListBuckets(){
 function editForm(){
   return(
     <div id="overlay" style={{"display":show}} onClick={()=>{setShow("none")}}>
-    <div id="text" onClick={(e)=>{e.stopPropagation()}}> 
+    <div id="text" style={{"backgroundColor":isDarkMode?"#838383":"white","color":isDarkMode?"white":"#1f1f1f"}} onClick={(e)=>{e.stopPropagation()}}> 
   <div className="form-group">
     <label htmlFor="name">summary: </label>
     <input
@@ -221,7 +220,7 @@ function editForm(){
 function createTaskForm(){
 return(
   <div id="overlay" style={{"display":showCreate}} onClick={()=>{setShowCreate("none")}}>
-  <div id="text" onClick={(e)=>{e.stopPropagation()}}> 
+  <div id="text" style={{"backgroundColor":isDarkMode?"#838383":"white","color":isDarkMode?"white":"#1f1f1f"}} onClick={(e)=>{e.stopPropagation()}}> 
 <div className="form-group">
   <label htmlFor="name">summary: </label>
   <input
@@ -302,8 +301,7 @@ async function createTask(e){
  // This following section will display the table with the records of individuals.
  return (
    <>
-       <h3 style={{"marginLeft":"6.5%"}}>{myProject.name}</h3>
-
+    <h3 style={{"marginLeft":"6.5%","color":isDarkMode?"white":"#1f1f1f"}}>{myProject.name}</h3>
      <div id="container">
        {todoListBuckets()}
      </div>
