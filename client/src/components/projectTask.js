@@ -27,6 +27,15 @@ export default function RecordList() {
 
 useEffect(()=>{
   if(currentPage==="tasklist"){
+    setShowCreate("block")
+    setMyTask({
+      description: "",
+      priority: "",
+      project:"",
+      summary: "",
+      status:"",
+      _id:"",
+    })
     setShow("block")
     return
   }
@@ -72,7 +81,7 @@ useEffect(() => {
    getRecords();
  
    return;
- }, [update,currentPage]);
+ }, [update]);
  
  // This method will delete a record
  async function deleteRecord(id) {
@@ -172,6 +181,10 @@ function todoListBuckets(){
 function editForm(){
   return(
     <div id="overlay" style={{"display":show}} onClick={()=>{
+      let dropDown1 = document.getElementById("selectPriority")
+      let dropDown2 = document.getElementById("selectStatus")
+      dropDown1.selectedIndex = 0;
+      dropDown2.selectedIndex = 0;
       setCurrentPage("")
       setShow("none")
       }}>
@@ -195,10 +208,10 @@ function editForm(){
       onChange={(e) => {updateForm({description:e.target.value})}}
     />
   </div>
-  <div className="form-group">
+  <div>
   <label htmlFor="name">priority: </label>
-  <select className="form-select" name="priority" onChange={(e)=>updateForm({priority:e.target.value})}>
-     <option selected> {myTask.priority} </option>
+  <select className="form-select" id="selectPriority" name="priority" onChange={(e)=>updateForm({priority:e.target.value})}>
+     <option defaultValue=""> {myTask.priority} </option>
      <option value="Lowest">Lowest</option>
      <option value="Low">Low</option>
      <option value="Medium">Medium</option>
@@ -206,10 +219,10 @@ function editForm(){
      <option value="Highest">Highest</option>
   </select>
  </div>
- <div className="form-group">
+ <div>
  <label htmlFor="name">status: </label>
-  <select className="form-select" name="status" onChange={(e) =>{updateForm({status:e.target.value})}}>
-     <option selected>{myTask.status}</option>
+  <select className="form-select" id="selectStatus" name="status" onChange={(e) =>{updateForm({status:e.target.value})}}>
+     <option defaultValue="">{myTask.status}</option>
      <option value="Todo">Todo</option>
      <option value="In Progress">In Progress</option>
      <option value="Done">Done</option>
@@ -229,6 +242,7 @@ function editForm(){
 }
 
 async function createTask(e){
+   setCurrentPage("")
     e.preventDefault();
     myTask.project = myProject._id;
     const newTask = { ...myTask };
