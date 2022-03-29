@@ -2,8 +2,6 @@ import React, {useState} from "react";
  
 // We use Route in order to define the different routes of our application
 import { Route, Routes } from "react-router-dom";
- 
-// We import all the components we need in our app
 import Navbar from "./components/navbar";
 import EditProject from "./components/editProject";
 import CreateProject from "./components/createProject";
@@ -20,13 +18,12 @@ const App = () => {
     setIsDarkMode(isDarkMode => !isDarkMode)
   }
   const value = {currentPage,setCurrentPage}
-
   //rgb(99, 99, 99)
  return (
    <div id="overlay2" style={{"backgroundColor":isDarkMode?"rgb(99, 99, 99)":"white"}}>
        <Auth0Provider
-    domain="dev-x8a3sk5w.us.auth0.com"
-    clientId="wHj4TJJtuzr09NRO4UFp6suFv4VocKiB"
+    domain={process.env.REACT_APP_AUTH0_DOMAIN}
+    clientId={process.env.REACT_APP_AUTH0_CLIENT_ID} 
     redirectUri={window.location.origin}>
     <ButtonContex.Provider value={value}>
      <MyContext.Provider value={isDarkMode}>
