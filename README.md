@@ -13,6 +13,9 @@
 # Delpoyment
 - Heroku
 
+# Authentication 
+- Auth0
+
 # Link
 - https://fast-beach-52871.herokuapp.com/
 
