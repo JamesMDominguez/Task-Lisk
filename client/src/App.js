@@ -3,8 +3,6 @@ import React, {useState} from "react";
 // We use Route in order to define the different routes of our application
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/navbar";
-import EditProject from "./components/editProject";
-import CreateProject from "./components/createProject";
 import ProjectList from "./components/projectList";
 import ProjectTask from "./components/projectTask";
 import './components/projectTask.css';
@@ -18,8 +16,8 @@ const App = () => {
     setIsDarkMode(isDarkMode => !isDarkMode)
   }
   const value = {currentPage,setCurrentPage}
-  //rgb(99, 99, 99)
- return (
+
+  return (
    <div id="overlay2" style={{"backgroundColor":isDarkMode?"rgb(99, 99, 99)":"white"}}>
        <Auth0Provider
     domain={process.env.REACT_APP_AUTH0_DOMAIN}
@@ -30,8 +28,6 @@ const App = () => {
      <Navbar/>
      <Routes>
        <Route exact path="/" element={<ProjectList />} />
-       <Route path="/createProject" element={<CreateProject />} />
-       <Route path="/editProject/:id" element={<EditProject />} />
        <Route path="/projectTask/:id" element={<ProjectTask />} />
      </Routes>
      <div className="footer" style={{"backgroundColor":isDarkMode?"#838383":"#eeeeee","color":isDarkMode?"white":"#1f1f1f"}}>

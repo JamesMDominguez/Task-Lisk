@@ -55,12 +55,12 @@
 
   #containerPro {
     display: flex;
-    justify-content: space-evenly; /* Can be changed in the live sample */
+    justify-content: space-between; /* Can be changed in the live sample */
     flex-wrap: wrap;
   }
   
 #containerPro > div {
-    min-width: 31%;
+    min-width: 20%;
     border-radius: 10px;
     padding: 10px;
     margin: 10px;

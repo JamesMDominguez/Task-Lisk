@@ -16,18 +16,10 @@ export default function Navbar() {
 
  return (
      <nav style={{"display":"flex","justifyContent":"space-between","backgroundColor":isDarkMode?"#838383":"#eeeeee","color":isDarkMode?"white":"#1f1f1f"}}>
-       <img className="navbar-brand" style={{"width" :"40px","marginLeft":"5px"}} onClick={()=>{
-         navigate("/")
-         setCurrentPage("/createProject")
-         }} src="http://www.powerpac.org/wp-content/uploads/2017/07/checklist.png"></img>
+       <img className="navbar-brand" style={{"width" :"40px","marginLeft":"5px"}} onClick={()=>{navigate("/")}} 
+         src="http://www.powerpac.org/wp-content/uploads/2017/07/checklist.png"></img>  
        <div style={{"display":"flex","justifyContent":"space-between","width":"53%"}}>  
-            <button className="btn btn-danger" style={{"margin":"5px"}} onClick={()=>{
-              if(currentPage==="/createProject"){
-                navigate("/createProject")
-              }else{
-                setCurrentPage("tasklist")
-              }
-              }}>Create</button> 
+            <button className="btn btn-danger" style={{"margin":"5px"}} onClick={()=>{setCurrentPage("create")}}>Create</button> 
          <LoginButton/>
        </div>
      </nav>

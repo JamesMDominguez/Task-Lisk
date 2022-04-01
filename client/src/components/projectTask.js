@@ -23,10 +23,9 @@ export default function RecordList() {
   status:"",
   _id:"",
 });
-//let myPageUrl=window.location.pathname.split('/')[1];
 
 useEffect(()=>{
-  if(currentPage==="tasklist"){
+  if(currentPage==="create"){
     setShowCreate("block")
     setMyTask({
       description: "",
@@ -44,7 +43,7 @@ useEffect(()=>{
 useEffect(() => {
     async function fetchData() {
       const id = params.id.toString();
-      const response = await fetch(`http://localhost:5000/project/${params.id.toString()}`);
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/project/${params.id.toString()}`);
   
       if (!response.ok) {
         const message = `An error has occurred: ${response.statusText}`;
@@ -67,7 +66,7 @@ useEffect(() => {
  // This method fetches the records from the database.
  useEffect(() => {
    async function getRecords() {
-     const response = await fetch(`http://localhost:5000/record/`);
+     const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/record/`);
  
      if (!response.ok) {
        const message = `An error occurred: ${response.statusText}`;
@@ -85,7 +84,7 @@ useEffect(() => {
  
  // This method will delete a record
  async function deleteRecord(id) {
-   await fetch(`http://localhost:5000/${id}`, {
+   await fetch(`${process.env.REACT_APP_SERVER_URL}/${id}`, {
      method: "DELETE"
    });
  
@@ -96,7 +95,7 @@ useEffect(() => {
  // This method will map out the records on the table
 
 async function updateRecord(updatedTask){
-  await fetch(`http://localhost:5000/update/${updatedTask._id}`, {
+  await fetch(`${process.env.REACT_APP_SERVER_URL}/update/${updatedTask._id}`, {
     method: "POST",
     body: JSON.stringify(updatedTask),
     headers: {
@@ -185,7 +184,7 @@ function editForm(){
       let dropDown2 = document.getElementById("selectStatus")
       dropDown1.selectedIndex = 0;
       dropDown2.selectedIndex = 0;
-      setCurrentPage("")
+      setCurrentPage("nope")
       setShow("none")
       }}>
     <div id="text" style={{"backgroundColor":isDarkMode?"#838383":"white","color":isDarkMode?"white":"#1f1f1f"}} onClick={(e)=>{e.stopPropagation()}}> 
@@ -242,12 +241,11 @@ function editForm(){
 }
 
 async function createTask(e){
-   setCurrentPage("")
     e.preventDefault();
     myTask.project = myProject._id;
     const newTask = { ...myTask };
   
-    await fetch("http://localhost:5000/record/add", {
+    await fetch(`${process.env.REACT_APP_SERVER_URL}/record/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -260,7 +258,6 @@ async function createTask(e){
     });
     setShow("none");
     setUpdate((prev)=>!prev);
-
   }
 
  return (
