@@ -11,10 +11,10 @@
 - Light Mode & Dark Mode
 
 # Delpoyment
-- Heroku
+- https://www.heroku.com/
 
 # Authentication 
-- Auth0
+- https://auth0.com/
 
 # Link
 - https://fast-beach-52871.herokuapp.com/
