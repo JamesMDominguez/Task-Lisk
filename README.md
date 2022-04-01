@@ -17,5 +17,17 @@
 - https://fast-beach-52871.herokuapp.com/
 
 # Data Structure
-- Project = { user_email , name , id }
-- Task = { summary , description , priority , status , project }
+
+| Project       | 
+| ------------- | 
+| user_email    | 
+| name          |
+| id            |
+
+| Task          |
+| ------------- | 
+| summary       | 
+| description   |
+| priority      |
+| status        |
+| project       |
