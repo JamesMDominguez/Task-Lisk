@@ -7,8 +7,8 @@
 - Click a to-do to view addtional details
 
 # Features
-- Drag and Drop Tasks
-- Light Mode & Dark Mode
+![This is an image](https://blog.eyeconic.com/dam/jcr:6dd69998-5ea0-445a-b775-ba71fbe7351f)
+![This is an image](https://blogs.articulate.com/rapid-elearning/wp-content/uploads/sites/7/2017/08/drag-drop-interactions-082107.png)
 
 # Delpoyment
 - https://www.heroku.com/
