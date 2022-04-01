@@ -33,4 +33,4 @@
 | description   |
 | priority      |
 | status        |
-| project       |
+| project_id    |
