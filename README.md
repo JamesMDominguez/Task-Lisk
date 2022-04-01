@@ -21,16 +21,16 @@
 
 # Data Structure
 
-| Project       | 
-| ------------- | 
-| user_email    | 
-| name          |
-| id            |
+| Project       |      Format     |
+| ------------- | -------------- |
+| user_email    |  email @ mail.com |
+| name          |  project_name  |
+| id            |      123###    |
 
-| Task          |
-| ------------- | 
-| summary       | 
-| description   |
-| priority      |
-| status        |
-| project_id    |
+| Task          |      Format     |
+| ------------- | -------------- |
+| summary       |  ...Text |
+| description   |  ...Text |
+| priority      |  Lowest, Low, Medium, High, Highest |
+| status        | Todo, In Progress, Done |
+| project_id    |  123###   |
