@@ -20,18 +20,6 @@
 - https://fast-beach-52871.herokuapp.com/
 
 # Data Structure
+<img width="653" alt="Screen Shot 2022-08-20 at 1 14 24 PM" src="https://user-images.githubusercontent.com/69368392/185764630-ddd69a1b-bffc-44ad-99e5-b584b5dd7bc6.png">
 
-| Project       |      Format     |
-| ------------- | -------------- |
-| user_email    |  email @ mail.com |
-| name          |  project_name  |
-| id            |      123###    |
 
-| Task          |      Format     |
-| ------------- | -------------- |
-| summary       |  ...Text |
-| description   |  ...Text |
-| priority      |  Lowest, Low, Medium, High, Highest |
-| status        | Todo, In Progress, Done |
-| project_id    |  123###   |
-| id            |  123###   |
